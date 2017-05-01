@@ -1,9 +1,9 @@
-const expect = require( 'chai' ).expect;
-const contracts = require( '../lib/contracts' );
+import chai from 'chai';
+import { asserts, decorators } from '../lib/contracts';
 
 const {
-    asserts
-} = contracts;
+    expect
+} = chai;
 
 describe( 'Asserts', () => {
     //:::::::::::::::::::::::::::::
@@ -134,7 +134,7 @@ describe( 'Asserts', () => {
         }
         Bar.prototype = Object.create( Foo.prototype );
         Bar.prototype.constructor = Bar;
-        expect( () => asserts.prototype( 'Foo message', Bar, Foo ) ).to.throw( '[ContractError]: Expected prototype of "function Bar() {\n            Foo.apply( this, arguments );\n        }", but given "function Foo() {}". Foo message' );
+        expect( () => asserts.prototype( 'Foo message', Bar, Foo ) ).to.throw( '[ContractError]: Expected prototype of "function Bar() {\n            Foo.apply(this, arguments);\n        }", but given "function Foo() {}' );
     } );
     it( 'assert.prototype not throw exception', () => {
         function Fee() {}
@@ -146,5 +146,25 @@ describe( 'Asserts', () => {
         Fum.prototype = new Fo();
         var fum = new Fum();
         expect( asserts.prototype( 'Foo message', Fi.prototype, fum ) ).to.undefined;
+    } );
+} );
+
+
+describe( 'decorators', () => {
+    //:::::::::::::::::::::::::::::
+    // decorators.pre
+    //:::::::::::::::::::::::::::::
+    it( 'decorators.pre', () => {
+        var enter = false;
+        class Foo {
+            @decorators.pre( ( a ) => enter = true )
+            foo( a ) {
+                return a;
+            }
+        }
+        const bar = new Foo();
+
+        expect( bar.foo( 42 ) ).to.be.equal( 42 );
+        expect( enter ).to.be.true;
     } );
 } );

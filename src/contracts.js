@@ -12,6 +12,10 @@ import {
     assertPrototype
 } from './asserts';
 
+import {
+    pre
+} from './pre';
+
 
 export const asserts = {
     assert,
@@ -25,4 +29,8 @@ export const asserts = {
     array: assertArray,
     instance: assertInstance,
     prototype: assertPrototype
+};
+
+export const decorators = {
+    pre
 };
