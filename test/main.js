@@ -154,10 +154,22 @@ describe( 'decorators', () => {
     //:::::::::::::::::::::::::::::
     // decorators.pre
     //:::::::::::::::::::::::::::::
+    it( 'decorators.pre throw exceptions', () => {
+        class Foo {
+            @decorators.pre( 'Foo message', ( a ) => a !== 42 )
+            foo( a ) {
+                return a;
+            }
+        }
+        const bar = new Foo();
+
+        expect( () => bar.foo( 42 ) ).to.throw( '[ContractError]: Foo message' );
+    } );
+
     it( 'decorators.pre', () => {
         var enter = false;
         class Foo {
-            @decorators.pre( ( a ) => enter = true )
+            @decorators.pre( 'Foo', ( a ) => { enter = true; return a === 42; } )
             foo( a ) {
                 return a;
             }

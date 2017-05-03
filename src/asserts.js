@@ -1,4 +1,4 @@
-const ERROR_PREFIX = '[ContractError]:';
+export const ERROR_PREFIX = '[ContractError]:';
 
 /**
  * @param {String} message
