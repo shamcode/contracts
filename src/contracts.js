@@ -12,10 +12,9 @@ import {
     assertPrototype
 } from './asserts';
 
-import {
-    pre
-} from './pre';
-
+import { pre } from './pre';
+import { post } from './post';
+import { invariant } from './invariant';
 
 export const asserts = {
     assert,
@@ -32,5 +31,7 @@ export const asserts = {
 };
 
 export const decorators = {
-    pre
+    pre,
+    post,
+    invariant
 };

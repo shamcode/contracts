@@ -179,4 +179,62 @@ describe( 'decorators', () => {
         expect( bar.foo( 42 ) ).to.be.equal( 42 );
         expect( enter ).to.be.true;
     } );
+
+    //:::::::::::::::::::::::::::::
+    // decorators.post
+    //:::::::::::::::::::::::::::::
+    it( 'decorators.post throw exceptions', () => {
+        class Foo {
+            @decorators.post( 'Foo message', ( result ) => result !== 42 )
+            foo( a ) {
+                return a;
+            }
+        }
+        const bar = new Foo();
+
+        expect( () => bar.foo( 42 ) ).to.throw( '[ContractError]: Foo message' );
+    } );
+
+    it( 'decorators.post', () => {
+        var enter = false;
+        class Foo {
+            @decorators.post( 'Foo', ( result, a ) => { enter = true; return 84 === result && a === 42; } )
+            foo( a ) {
+                return 2 * a;
+            }
+        }
+        const bar = new Foo();
+
+        expect( bar.foo( 42 ) ).to.be.equal( 84 );
+        expect( enter ).to.be.true;
+    } );
+
+    //:::::::::::::::::::::::::::::
+    // decorators.invariant
+    //:::::::::::::::::::::::::::::
+    it( 'decorators.invariant throw exceptions', () => {
+        class Foo {
+            @decorators.invariant( 'Foo message', ( a ) => a !== 42 )
+            foo( a ) {
+                return a;
+            }
+        }
+        const bar = new Foo();
+
+        expect( () => bar.foo( 42 ) ).to.throw( '[ContractError]: Foo message' );
+    } );
+
+    it( 'decorators.invariant', () => {
+        var enter = false;
+        class Foo {
+            @decorators.invariant( 'Foo', ( a ) => { enter = true; return a === 42; } )
+            foo( a ) {
+                return a;
+            }
+        }
+        const bar = new Foo();
+
+        expect( bar.foo( 42 ) ).to.be.equal( 42 );
+        expect( enter ).to.be.true;
+    } );
 } );
