@@ -11,7 +11,6 @@ import {
     assertInstance,
     assertPrototype
 } from './asserts';
-
 import { pre } from './pre';
 import { post } from './post';
 import { invariant } from './invariant';
@@ -29,9 +28,9 @@ export const asserts = {
     instance: assertInstance,
     prototype: assertPrototype
 };
-
 export const decorators = {
     pre,
     post,
     invariant
 };
+export { default as contract } from './templates';

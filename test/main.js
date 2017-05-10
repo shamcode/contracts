@@ -1,5 +1,5 @@
 import chai from 'chai';
-import { asserts, decorators } from '../lib/contracts';
+import { asserts, decorators, contract } from '../lib/contracts';
 
 const {
     expect
@@ -236,5 +236,17 @@ describe( 'decorators', () => {
 
         expect( bar.foo( 42 ) ).to.be.equal( 42 );
         expect( enter ).to.be.true;
+    } );
+} );
+
+describe( 'template string', () => {
+    it( 'contract throw exceptions', () => {
+        expect( () => {
+            contract`Foo message ${ false } location: bar module`;
+        } ).to.throw( '[ContractError]: Foo message  location: bar module' );
+    } );
+
+    it( 'contract', () => {
+        expect( contract`Foo message ${true} location: bar module` ).to.be.equal( 'Foo message  location: bar module' );
     } );
 } );
